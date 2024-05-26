@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - Park Easy</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="../css/styles.css" rel="stylesheet" />q
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">Park Easy</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <!-- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"> -->
+            
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="login.html">Login</a></li>
+                    <li><a class="dropdown-item" href="register.html">Register</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Parking</div>
+                        <a class="nav-link" href="Parking.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-circle-plus"></i></div>
+                            Vehicle Entry
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Features</div>
+                        <a class="nav-link collapsed" href="Rates.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+                            Rates
+                        </a>
+                        <a class="nav-link collapsed" href="ParkingSlots.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-square-parking"></i></div>
+                            Parking Slots
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Admin
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h2 class="mt-4">Slots</h2>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active"></li>
+                    </ol>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 ">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#slotModal">Add New</button>
+
+                        </div>
+                        <!-- modal for Slots -->
+                        <div class="modal fade" id="slotModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add Parking Slots</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <input id="showDvOldFW" type="checkbox"> Click here to add slots
+                                                        only
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div id="dvOldFW" class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="spnRequired">*</span><label
+                                                            for="chkFloor">Floors</label>
+                                                        <select class="form-control" id="chkFloor">
+                                                            <option value="<-- select -->">
+                                                                <-- select -->
+                                                            </option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="spnRequired">*</span><label
+                                                            for="chkWing">Wings</label>
+                                                        <select class="form-control" id="chkWing">
+                                                            <option value="<-- select -->">
+                                                                <-- select -->
+                                                            </option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="dvNewFW" class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="spnRequired">*</span><label
+                                                            for="txtFloorName">Floor Name</label>
+                                                        <input type="text" class="form-control" id="txtFloorName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="spnRequired">*</span><label for="txtWingName">Wing
+                                                            Name</label>
+                                                        <input type="text" class="form-control" id="txtWingName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h5>Add all slots below:</h5>
+                                            <section class="border border-secondary p-2 m-1">
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <span style="color:red">*</span><label for="txtSlot">Slot Name</label>
+                                                            <input type="text" class="form-control" id="txtSlot">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 my-4">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input"
+                                                                id="chkSlot">
+                                                            <label class="form-check-label"
+                                                                for="chkSlot">IsSlotAvailable</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <span style="color:red">*</span><label for="chkCategory">Category</label>
+                                                            <select class="form-control" id="chkCategory">
+                                                                <option value="<-- select -->">
+                                                                    <-- select -->
+                                                                </option>
+                                                                <option value="Light Motor Four wheeler">Light Motor
+                                                                    Four wheeler</option>
+                                                                <option value="Two Wheeler">Two Wheeler</option>
+                                                                <option value="Three Wheeler">Three Wheeler</option>
+                                                                <option value="Heavy Vehicle Four Wheeler">Heavy Vehicle
+                                                                    Four Wheeler</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <span style="color:red">*</span> <label for="txtCapacity">Capacity</label>
+                                                            <input type="text" class="form-control" id="txtCapacity">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 my-4">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-dark"
+                                                                id="btnAddSlot">Add</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <h5>List of all slots</h5>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="dvSlotLists w-100">
+                                                        <table style="height: 200px;"
+                                                            class="table table-responsive w-100  border border-primary">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="w-50">Slot Name</th>
+                                                                    <th class="w-50">IsAvailable</th>
+                                                                    <th class="w-50">Vehicle Type</th>
+                                                                    <th class="w-50">Capacity</th>
+                                                                    <th class="w-50">Delete</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tAvailableSlots">
+
+                                                                
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="chkAvailable"
+                                                            class="form-check-input" id="chkOccupied">
+                                                        <label class="form-check-label"
+                                                            for="chkOccupied">IsFullyOccupied</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="checkActive"
+                                                            class="form-check-input" id="chkActive">
+                                                        <label class="form-check-label" for="chkActive">IsActive</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            id="btnClose">Close</button>
+                                        <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal for Edit Slots-->
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Slot</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <!-- <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <input id="showDvOldFW" type="checkbox"> Click here to add slots
+                                                        only
+                                                    </div>
+
+                                                </div>
+                                            </div> -->
+                                            <div id="dvNewFW" class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="txtEditFloorName">Floor Name</label>
+                                                        <input type="text" class="form-control" id="txtEditFloorName" placeholder="Enter Floor Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="txtEditWingName">Wing Name</label>
+                                                        <input type="text" class="form-control" id="txtEditWingName" placeholder="Enter Floor Name">
+                                                    </div>
+                                                </div>
+                    
+                                            </div>
+                                    
+                                          
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <span style="color:red">*</span><label for="txtEditSlot">Slot Name</label>
+                                                            <input type="text" class="form-control" id="txtEditSlot">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 my-4">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input"
+                                                                id="chkEditSlot">
+                                                            <label class="form-check-label"
+                                                                for="chkEditSlot">IsSlotAvailable</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                           <label for="chkEditCategory">Category</label>
+                                                            <select class="form-control" id="chkEditCategory">
+                                                                <option value="<-- select -->">
+                                                                    <-- select -->
+                                                                </option>
+                                                                <option value="Light Motor Four wheeler">Light Motor
+                                                                    Four wheeler</option>
+                                                                <option value="Two Wheeler">Two Wheeler</option>
+                                                                <option value="Three Wheeler">Three Wheeler</option>
+                                                                <option value="Heavy Vehicle Four Wheeler">Heavy Vehicle
+                                                                    Four Wheeler</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <span style="color:red">*</span> <label for="txtEditCapacity">Capacity</label>
+                                                            <input type="text" class="form-control" id="txtEditCapacity">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </section>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="chkAvailable"
+                                                            class="form-check-input" id="chkEditOccupied">
+                                                        <label class="form-check-label"
+                                                            for="chkEditOccupied">IsFullyOccupied</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="checkActive"
+                                                            class="form-check-input" id="chkEditActive">
+                                                        <label class="form-check-label" for="chkEditActive">IsActive</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            id="btnClose">Close</button>
+                                        <button type="button" class="btn btn-primary" id="btnUpdate">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Area Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4"> 
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Bar Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                        </div> -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Parking Slots
+                        </div>
+                        <div class="card-body">
+                            <table id="" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Floor Name</th>
+                                        <th scope="col">Wing Name</th>
+                                        <th scope="col">Slot Name</th>
+                                        <th scope="col">IsSlotAvailable</th>
+                                        <th scope="col">Vehicle Type</th>
+                                        <th scope="col">Capacity</th>
+                                        <th scope="col">IsFullyOccupied</th>
+                                        <th scope="col"> IsActive</th>
+                                        <th scope="col">Edit</th> 
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tAllData">
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy;SIT725 T1 Project 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+       
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/slots.js"></script>
+</body>
+
+</html>
