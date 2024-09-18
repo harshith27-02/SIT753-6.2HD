@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'sit753-6.2hd-image'
+    }
+
+    stages {
+        // Stage 1: Build
+        stage('Build') {
+            steps {
+                script {
+                    // Building the Docker image
+                    dockerImage = docker.build("${DOCKER_IMAGE}")
+                }
+            }
+        }
+
+        // Stage 2: Test
+        stage('Test') {
+            steps {
+                script {
+                    // Running tests
+                    sh 'npm install'  // or your specific build/test command
+                    sh 'npm test'     // ensure tests are present and can be run
+                }
+            }
+        }
+
+        // Stage 3: Deploy
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploying the app to Docker container
+                    sh 'docker run -d -p 3000:3000 ${DOCKER_IMAGE}'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution complete.'
+        }
+    }
+}
