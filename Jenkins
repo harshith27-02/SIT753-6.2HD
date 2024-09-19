@@ -39,6 +39,12 @@ pipeline {
                 sh 'npx mocha'
             }
         }
+        stage('Code Quality') {
+            steps {
+                // Run ESLint for code quality
+                sh 'npm run lint'
+            }
+        }
 
         stage('Deploy') {
             steps {
