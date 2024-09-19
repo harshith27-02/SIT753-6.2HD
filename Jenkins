@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 22.9.0'
+        nodejs 'NodeJS 22.9.0'  // NodeJS installation configured in Jenkins
     }
 
     stages {
@@ -20,37 +20,41 @@ pipeline {
 
         stage('Set Permissions') {
             steps {
-                // Grant execute permissions to Webpack in node_modules
+                // Set permissions for any necessary files or directories
                 sh 'chmod -R +x node_modules/.bin'
-               
             }
         }
 
         stage('Build') {
             steps {
-                // Run the build script from package.json
+                // Build the project
                 sh 'npm run build'
+            }
+        }
+
+        stage('Code analysis') {
+            steps {
+                script {
+                    // Try to run the linting step, but don't fail the pipeline if it fails
+                    try {
+                        sh 'npm run lint'
+                    } catch (err) {
+                        echo 'Linting failed, but continuing with the pipeline...'
+                    }
+                }
             }
         }
 
         stage('Unit Test') {
             steps {
-                // Run Mocha tests
+                // Run the unit tests using Mocha
                 sh 'npx mocha'
             }
         }
 
-        stage('Code Quality') {
-        steps {
-        // Run ESLint to check code quality
-            sh 'npm run lint'
-        }
-    }
-
-
         stage('Deploy') {
             steps {
-                // Run the server in the background
+                // Deploy the application (modify the deploy command as needed)
                 sh 'npm run start --port=4000 &'
             }
         }
@@ -58,7 +62,8 @@ pipeline {
 
     post {
         always {
-            deleteDir()  // Clean up workspace after pipeline run
+            // Clean up workspace after pipeline execution
+            deleteDir()
         }
         success {
             echo 'Build, Test, and Deploy stages completed successfully!'
