@@ -1,6 +1,7 @@
 // test/app.test.js
 
-const chai = require('chai');
+//const chai = require('chai');
+import chai from 'chai';
 const expect = chai.expect;
 
 describe('Sample Test', () => {
