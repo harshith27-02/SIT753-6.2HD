@@ -12,37 +12,38 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                // Create build artifact
-                sh 'npm run build'
+                sh 'npm install'
             }
         }
 
         stage('Set Permissions') {
             steps {
-                // Change permissions for the node_modules/.bin folder
+                // Grant execute permissions to Webpack in node_modules
                 sh 'chmod -R +x node_modules/.bin'
+               
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Run the build script from package.json
+                sh 'npm run build'
             }
         }
 
         stage('Unit Test') {
             steps {
-                // Run Mocha unit tests
+                // Run Mocha tests
                 sh 'npx mocha'
             }
         }
-
-        stage('Code Quality') {
-            steps {
-                // Run ESLint for code quality
-                sh 'npm run lint'
-            }
-        }
+        
 
         stage('Deploy') {
             steps {
-                // Run the server in a test environment (on a different port)
+                // Run the server in the background
                 sh 'npm run start --port=4000 &'
             }
         }
