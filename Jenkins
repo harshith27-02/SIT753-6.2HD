@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         nodejs 'NodeJS 22.9.0'  // NodeJS installation configured in Jenkins
-        sonar 'SonarQube Scanner'  // Correct SonarQube tool type
     }
 
     environment {
@@ -46,7 +45,7 @@ pipeline {
         stage('Code Quality') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube-Local') {  // Use your SonarQube server name here
+                    withSonarQubeEnv('SonarQube-Local') {  // Use the SonarQube server name you configured in Jenkins
                         sh 'sonar-scanner \
                             -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
                             -Dsonar.sources=. \
