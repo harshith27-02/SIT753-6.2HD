@@ -2,13 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 22.9.0'  // NodeJS installation configured in Jenkins
-    }
-
-    environment {
-        SONARQUBE_SERVER_URL = 'http://localhost:9000'  // Your SonarQube server URL
-        SONARQUBE_PROJECT_KEY = 'my-node-app'  // Unique project key for SonarQube
-        SONARQUBE_TOKEN = 'sqa_dbcd5ed5ea4d1bd493689f334f756fa99788a6c0'  // Your SonarQube token
+        nodejs 'NodeJS 22.9.0'
     }
 
     stages {
@@ -26,38 +20,37 @@ pipeline {
 
         stage('Set Permissions') {
             steps {
+                // Grant execute permissions to Webpack in node_modules
                 sh 'chmod -R +x node_modules/.bin'
+               
             }
         }
 
         stage('Build') {
             steps {
+                // Run the build script from package.json
                 sh 'npm run build'
             }
         }
 
         stage('Unit Test') {
             steps {
+                // Run Mocha tests
                 sh 'npx mocha'
             }
         }
 
         stage('Code Quality') {
-            steps {
-                script {
-                    withSonarQubeEnv('SonarQube-Local') {  // Use the SonarQube server name you configured in Jenkins
-                        sh 'sonar-scanner \
-                            -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=${SONARQUBE_SERVER_URL} \
-                            -Dsonar.login=${SONARQUBE_TOKEN}'
-                    }
-                }
-            }
+        steps {
+        // Run ESLint to check code quality
+            sh 'npm run lint'
         }
+    }
+
 
         stage('Deploy') {
             steps {
+                // Run the server in the background
                 sh 'npm run start --port=4000 &'
             }
         }
@@ -65,7 +58,7 @@ pipeline {
 
     post {
         always {
-            deleteDir()
+            deleteDir()  // Clean up workspace after pipeline run
         }
         success {
             echo 'Build, Test, and Deploy stages completed successfully!'
