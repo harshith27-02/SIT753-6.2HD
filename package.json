@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "mocha",
     "start": "node server.js",
     "deploy": "npm run start"
