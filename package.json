@@ -4,6 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "build": "npm run build:prod",
+    "build:prod": "NODE_ENV=production webpack --config webpack.prod.js",
+    "lint": "eslint .",
     "test": "mocha",
     "start": "node server.js",
     "deploy": "npm run start"

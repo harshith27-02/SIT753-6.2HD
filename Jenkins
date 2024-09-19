@@ -14,7 +14,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'npm install'
+                // Create build artifact
+                sh 'npm run build'
             }
         }
 
@@ -27,21 +28,29 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-                // Run Mocha tests using npx
+                // Run Mocha unit tests
                 sh 'npx mocha'
+            }
+        }
+
+        stage('Code Quality') {
+            steps {
+                // Run ESLint for code quality
+                sh 'npm run lint'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'npm run start &'
+                // Run the server in a test environment (on a different port)
+                sh 'npm run start --port=4000 &'
             }
         }
     }
 
     post {
         always {
-            deleteDir()
+            deleteDir()  // Clean up workspace after pipeline run
         }
         success {
             echo 'Build, Test, and Deploy stages completed successfully!'
