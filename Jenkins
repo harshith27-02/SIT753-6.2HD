@@ -1,38 +1,30 @@
 pipeline {
     agent any
-
-    environment {
-        DOCKER_IMAGE = 'sit753-6.2hd-image'
-    }
-
     stages {
-        // Stage 1: Build
         stage('Build') {
             steps {
                 script {
-                    // Building the Docker image
-                    dockerImage = docker.build("${DOCKER_IMAGE}")
+                    // Install Node.js dependencies
+                    sh 'npm install' // Install dependencies from package.json
                 }
             }
         }
 
-        // Stage 2: Test
         stage('Test') {
             steps {
                 script {
-                    // Running tests
-                    sh 'npm install'  // or your specific build/test command
-                    sh 'npm test'     // ensure tests are present and can be run
+                    // Run Node.js tests using your testing framework (e.g., Mocha, Jest)
+                    sh 'npm test' // Assuming you have a test script defined in package.json
                 }
             }
         }
 
-        // Stage 3: Deploy
         stage('Deploy') {
             steps {
                 script {
-                    // Deploying the app to Docker container
-                    sh 'docker run -d -p 3000:3000 ${DOCKER_IMAGE}'
+                    // Simulate deployment
+                    // For real deployment, you could use SSH or cloud-based methods (e.g., Heroku, AWS)
+                    echo "Simulating deployment of build artifacts..."
                 }
             }
         }
@@ -40,7 +32,8 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline execution complete.'
+            // Clean up the workspace after the pipeline
+            deleteDir()
         }
     }
 }
