@@ -44,7 +44,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Run the server in the background
-                sh 'npm run start &'
+                sh 'npm run start --port=4000 &'
             }
         }
     }
