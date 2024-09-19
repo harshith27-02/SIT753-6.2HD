@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         nodejs 'NodeJS 22.9.0'  // NodeJS installation configured in Jenkins
-        sonarqube 'SonarQube Scanner'  // SonarQube scanner tool installed via Jenkins
+        sonar 'SonarQube Scanner'  // Correct SonarQube tool type
     }
 
     environment {
