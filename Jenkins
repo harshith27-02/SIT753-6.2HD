@@ -1,39 +1,51 @@
 pipeline {
     agent any
+
+    tools {
+        // Use the name of the NodeJS installation you configured in Jenkins
+        nodejs 'NodeJS 22.9.0'
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the repository
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
-                script {
-                    // Install Node.js dependencies
-                    sh 'npm install' // Install dependencies from package.json
-                }
+                // Install Node.js dependencies using npm
+                sh 'npm install'
             }
         }
 
         stage('Test') {
             steps {
-                script {
-                    // Run Node.js tests using your testing framework (e.g., Mocha, Jest)
-                    sh 'npm test' // Assuming you have a test script defined in package.json
-                }
+                // Run your test scripts, assuming you have them configured in package.json
+                sh 'npm test'
             }
         }
 
         stage('Deploy') {
             steps {
-                script {
-                    // Simulate deployment
-                    // For real deployment, you could use SSH or cloud-based methods (e.g., Heroku, AWS)
-                    echo "Simulating deployment of build artifacts..."
-                }
+                // Run your deploy script (replace with your actual deployment command)
+                sh 'npm run deploy'
             }
         }
     }
 
     post {
         always {
-            // Clean up the workspace after the pipeline
+            // Clean up workspace after the build
             deleteDir()
+        }
+        success {
+            echo 'Build, Test, and Deploy stages completed successfully!'
+        }
+        failure {
+            echo 'Build failed. Check logs for details.'
         }
     }
 }
