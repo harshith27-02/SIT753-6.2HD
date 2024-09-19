@@ -2,13 +2,14 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 22.9.0'  // Ensure NodeJS is configured
+        nodejs 'NodeJS 22.9.0'  // NodeJS installation configured in Jenkins
+        sonarqube 'SonarQube Scanner'  // SonarQube scanner tool installed via Jenkins
     }
 
     environment {
-        SONARQUBE_SERVER_URL = 'http://localhost:9000'  // Adjust URL if needed
-        SONARQUBE_PROJECT_KEY = 'my-node-app'  // Set your project key
-        SONARQUBE_TOKEN = 'sqa_dbcd5ed5ea4d1bd493689f334f756fa99788a6c0'  // Use your SonarQube token
+        SONARQUBE_SERVER_URL = 'http://localhost:9000'  // Your SonarQube server URL
+        SONARQUBE_PROJECT_KEY = 'my-node-app'  // Unique project key for SonarQube
+        SONARQUBE_TOKEN = 'sqa_dbcd5ed5ea4d1bd493689f334f756fa99788a6c0'  // Your SonarQube token
     }
 
     stages {
@@ -45,8 +46,7 @@ pipeline {
         stage('Code Quality') {
             steps {
                 script {
-                    // SonarQube analysis
-                    withSonarQubeEnv('SonarQube-Local') {  // SonarQube server name in Jenkins
+                    withSonarQubeEnv('SonarQube-Local') {  // Use your SonarQube server name here
                         sh 'sonar-scanner \
                             -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
                             -Dsonar.sources=. \
