@@ -1,39 +1,53 @@
 pipeline {
     agent any
+
+    tools {
+        nodejs 'NodeJS 22.9.0'
+    }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                script {
-                    // Install Node.js dependencies
-                    sh 'npm install' // Install dependencies from package.json
-                }
+                checkout scm
             }
         }
 
-        stage('Test') {
+        stage('Build') {
             steps {
-                script {
-                    // Run Node.js tests using your testing framework (e.g., Mocha, Jest)
-                    sh 'npm test' // Assuming you have a test script defined in package.json
-                }
+                sh 'npm install'
+            }
+        }
+
+        stage('Set Permissions') {
+            steps {
+                // Change permissions for the node_modules/.bin folder
+                sh 'chmod -R +x node_modules/.bin'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                // Run Mocha tests using npx
+                sh 'npx mocha'
             }
         }
 
         stage('Deploy') {
             steps {
-                script {
-                    // Simulate deployment
-                    // For real deployment, you could use SSH or cloud-based methods (e.g., Heroku, AWS)
-                    echo "Simulating deployment of build artifacts..."
-                }
+                sh 'npm run deploy'
             }
         }
     }
 
     post {
         always {
-            // Clean up the workspace after the pipeline
             deleteDir()
+        }
+        success {
+            echo 'Build, Test, and Deploy stages completed successfully!'
+        }
+        failure {
+            echo 'Build failed. Check logs for details.'
         }
     }
 }
