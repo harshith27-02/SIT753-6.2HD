@@ -18,9 +18,16 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Set Permissions') {
             steps {
-                // Use npx to run mocha from node_modules
+                // Change permissions for the node_modules/.bin folder
+                sh 'chmod -R +x node_modules/.bin'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                // Run Mocha tests using npx
                 sh 'npx mocha'
             }
         }
