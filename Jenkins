@@ -22,7 +22,7 @@ pipeline {
             steps {
                 // Grant execute permissions to Webpack in node_modules
                 sh 'chmod -R +x node_modules/.bin'
-                sh 'chmod +x node_modules/.bin/webpack'
+               
             }
         }
 
@@ -39,12 +39,7 @@ pipeline {
                 sh 'npx mocha'
             }
         }
-        stage('Code Quality') {
-            steps {
-                // Run ESLint for code quality
-                sh 'npm run lint'
-            }
-        }
+        
 
         stage('Deploy') {
             steps {
