@@ -2,7 +2,13 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 22.9.0'
+        nodejs 'NodeJS 22.9.0'  // Ensure NodeJS is configured
+    }
+
+    environment {
+        SONARQUBE_SERVER_URL = 'http://localhost:9000'  // Adjust URL if needed
+        SONARQUBE_PROJECT_KEY = 'my-node-app'  // Set your project key
+        SONARQUBE_TOKEN = 'sqa_dbcd5ed5ea4d1bd493689f334f756fa99788a6c0'  // Use your SonarQube token
     }
 
     stages {
@@ -20,37 +26,39 @@ pipeline {
 
         stage('Set Permissions') {
             steps {
-                // Grant execute permissions to Webpack in node_modules
                 sh 'chmod -R +x node_modules/.bin'
-               
             }
         }
 
         stage('Build') {
             steps {
-                // Run the build script from package.json
                 sh 'npm run build'
             }
         }
 
         stage('Unit Test') {
             steps {
-                // Run Mocha tests
                 sh 'npx mocha'
             }
         }
 
         stage('Code Quality') {
-        steps {
-        // Run ESLint to check code quality
-            sh 'npm run lint'
+            steps {
+                script {
+                    // SonarQube analysis
+                    withSonarQubeEnv('SonarQube-Local') {  // SonarQube server name in Jenkins
+                        sh 'sonar-scanner \
+                            -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${SONARQUBE_SERVER_URL} \
+                            -Dsonar.login=${SONARQUBE_TOKEN}'
+                    }
+                }
+            }
         }
-    }
-
 
         stage('Deploy') {
             steps {
-                // Run the server in the background
                 sh 'npm run start --port=4000 &'
             }
         }
@@ -58,7 +66,7 @@ pipeline {
 
     post {
         always {
-            deleteDir()  // Clean up workspace after pipeline run
+            deleteDir()
         }
         success {
             echo 'Build, Test, and Deploy stages completed successfully!'
