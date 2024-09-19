@@ -55,7 +55,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Deploy the application (modify the deploy command as needed)
-                sh 'npm run start --port=4000 &'
+                sh 'npm run start --port=3000 &'
             }
         }
     }
