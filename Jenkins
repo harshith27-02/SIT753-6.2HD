@@ -32,16 +32,10 @@ pipeline {
             }
         }
 
-        stage('Code analysis') {
+        stage('Code Analysis') {
             steps {
-                script {
-                    // Try to run the linting step, but don't fail the pipeline if it fails
-                    try {
-                        sh 'npm run lint'
-                    } catch (err) {
-                        echo 'Linting failed, but continuing with the pipeline...'
-                    }
-                }
+                // Run the linting, but continue even if it fails
+                sh 'npm run lint || true'
             }
         }
 
